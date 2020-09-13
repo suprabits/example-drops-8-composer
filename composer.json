@@ -1,5 +1,5 @@
 {
-    "name": "pantheon-systems/example-drops-8-composer",
+    "name": "suprabits/example-drops-8-composer",
     "description": "Install drops-8 with Composer on Pantheon.",
     "type": "project",
     "license": "MIT",
@@ -23,6 +23,7 @@
         "zaporylie/composer-drupal-optimizations": "^1.0"
     },
     "require-dev": {
+        "neronmoon/scriptsdev": "^0.1.0",
         "behat/behat": "^3.1",
         "behat/mink": "^1.7",
         "behat/mink-extension": "^2.2",
@@ -55,10 +56,10 @@
         ],
         "lint": "find web/modules/custom web/themes/custom -name '*.php' -exec php -l {} \\;",
         "code-sniff": [
-            "./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/modules/custom",
-            "./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/themes/custom",
-            "./vendor/bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/modules/custom",
-            "./vendor/bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/themes/custom"
+            "./bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/modules/custom",
+            "./bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/themes/custom",
+            "./bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/modules/custom",
+            "./bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/themes/custom"
         ],
         "unit-test": "echo 'No unit test step defined.'",
         "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
@@ -88,6 +89,11 @@
             ],
             "export-configuration": "drush config-export --yes"
         },
+        "scripts-dev": {
+            "post-install-cmd": [
+              "sh ./scripts/github-hooks/setup.sh"
+            ]
+        },
         "drupal-scaffold": {
             "allowed-packages": [
                 "pantheon-systems/drupal-integrations"
@@ -97,7 +103,7 @@
             },
             "file-mapping": {
                 "[project-root]/.editorconfig": false
-            }            
+            }
         }
     },
     "config": {
@@ -106,6 +112,7 @@
         "sort-packages": true,
         "platform": {
             "php": "7.3"
-        }
+        },
+        "bin-dir": "bin/"
     }
 }
